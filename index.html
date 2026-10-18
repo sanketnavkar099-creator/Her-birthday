@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Kajukatali♡</title>
+
+<style>
+:root {
+    --glass: rgba(255,255,255,.76);
+    --dark: #443449;
+    --pink: #d96b94;
+    --light-pink: #fff0f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--dark);
+    overflow-x: hidden;
+    background: #fff0f6;
+}
+
+.scene {
+    min-height: 100vh;
+    padding: 85px 18px 40px;
+    position: relative;
+    isolation: isolate;
+}
+
+.scene::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        linear-gradient(
+            125deg,
+            rgba(255,255,255,.38),
+            rgba(255,240,248,.28),
+            rgba(255,255,255,.38)
+        ),
+        url("background.png") center/cover no-repeat;
+}
+
+.scene::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255,248,252,.12);
+    pointer-events: none;
+}
+
+.music-button {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 30;
+    border: 1px solid rgba(255,255,255,.8);
+    background: rgba(255,255,255,.88);
+    color: var(--dark);
+    padding: 12px 17px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(90,50,75,.12);
+    font-size: 14px;
+}
+
+.page {
+    display: none;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    animation: fadeIn .7s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    color: var(--dark);
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,.88);
+    border-radius: 28px;
+    padding: clamp(24px,5vw,48px);
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(89,50,75,.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.card h1, .card h2, .card h3, .card p {
+    color: var(--dark);
+}
+
+.eyebrow {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9a627c !important;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: clamp(42px,9vw,76px);
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: clamp(30px,6vw,46px);
+    margin-bottom: 20px;
+}
+
+.pink {
+    color: var(--pink) !important;
+}
+
+.intro {
+    font-size: clamp(16px,3vw,19px);
+    line-height: 1.9;
+    max-width: 540px;
+    margin: 0 auto 25px;
+}
+
+.heart {
+    color: #e76e9d;
+    font-size: 24px;
+    display: inline-block;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 21px;
+    border-radius: 30px;
+    border: 1px solid #e9b5ca;
+    background: rgba(255,255,255,.92);
+    color: #75445e;
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.btn.primary {
+    background: var(--pink);
+    color: white;
+    border-color: var(--pink);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(160,75,115,.16);
+}
+
+/* MAIN PHOTO */
+.photo-frame {
+    width: min(100%,390px);
+    margin: 22px auto;
+    padding: 12px;
+    background: rgba(255,255,255,.92);
+    border: 1px solid #f5d9e5;
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(80,40,60,.13);
+    transform: rotate(-1deg);
+}
+
+.photo-frame img {
+    display: block;
+    width: 100%;
+    max-height: 480px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.caption {
+    font-style: italic;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+
+/* SMALL MEMORY PHOTO FRAMES */
+.memory-gallery {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 15px;
+    max-width: 560px;
+    margin: 28px auto;
+}
+
+.memory-frame {
+    min-width: 0;
+    padding: 7px 7px 12px;
+    background: rgba(255,255,255,.96);
+    border: 1px solid #f5d9e5;
+    border-radius: 7px;
+    box-shadow: 0 7px 18px rgba(89,50,75,.12);
+    transform: rotate(-2deg);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.memory-frame:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.memory-frame:nth-child(3n) {
+    transform: rotate(-1deg);
+}
+
+.memory-frame:hover {
+    transform: rotate(0) translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(89,50,75,.18);
+}
+
+.memory-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.memory-frame p {
+    margin-top: 9px;
+    font-size: clamp(9px,2.5vw,12px);
+    line-height: 1.4;
+    color: #9a627c !important;
+}
+
+/* CAKE */
+.cake-area {
+    margin: 25px auto 10px;
+    min-height: 255px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+.cake {
+    width: 230px;
+    height: 115px;
+    background: linear-gradient(#ffc3d7,#f39aba);
+    border-radius: 12px 12px 18px 18px;
+    position: relative;
+    box-shadow: 0 12px 0 #df80a4;
+    animation: cakeAppear 1s ease;
+}
+
+.cake::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 28px;
+    background: #fff1f6;
+    border-radius: 12px 12px 50% 50%;
+}
+
+.cake::after {
+    content: "♡  ♡  ♡";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 45px;
+    color: #fff8fc;
+    font-size: 22px;
+    text-align: center;
+}
+
+.plate {
+    width: 275px;
+    height: 17px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #efc2d4;
+    margin-top: 10px;
+}
+
+.candles {
+    display: flex;
+    gap: 24px;
+    position: absolute;
+    bottom: 125px;
+    z-index: 2;
+}
+
+.candle {
+    width: 12px;
+    height: 56px;
+    background: repeating-linear-gradient(
+        45deg,#fff 0 7px,#e98cb0 7px 14px
+    );
+    border-radius: 4px 4px 0 0;
+    position: relative;
+}
+
+.flame {
+    position: absolute;
+    top: -25px;
+    left: 1px;
+    width: 10px;
+    height: 22px;
+    background: #ffbc49;
+    border-radius: 50% 50% 45% 45%;
+    box-shadow: 0 0 18px #ffb24b;
+    animation: flicker .25s infinite alternate;
+    transform-origin: bottom;
+}
+
+@keyframes flicker {
+    from { transform: rotate(-5deg) scale(1); }
+    to { transform: rotate(5deg) scale(1.1); }
+}
+
+.flame.off {
+    display: none;
+}
+
+.smoke {
+    display: none;
+    position: absolute;
+    top: -29px;
+    left: 2px;
+    color: #a89ba5;
+    font-size: 20px;
+    animation: smokeUp 1.4s ease-out forwards;
+}
+
+.smoke.show {
+    display: block;
+}
+
+@keyframes smokeUp {
+    from { opacity: .9; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-35px); }
+}
+
+@keyframes cakeAppear {
+    from { transform: scale(.8); opacity: .4; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* FLOATING STICKERS */
+#stickers {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 15;
+}
+
+.sticker {
+    position: absolute;
+    bottom: -40px;
+    animation: floatUp linear forwards;
+    opacity: .9;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0) rotate(0); opacity: .95; }
+    to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+/* LETTER */
+.letter-text {
+    font-size: 17px;
+    line-height: 2;
+    text-align: left;
+    white-space: pre-line;
+}
+
+.signature {
+    text-align: right;
+    margin-top: 25px;
+    font-style: italic;
+    color: #a04e76 !important;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 24px;
+    color: #684a5a;
+    font-size: 13px;
+}
+
+@media (max-width:480px) {
+    .scene { padding: 85px 12px 30px; }
+    .card { padding: 25px 19px; border-radius: 23px; }
+    .letter-text { font-size: 16px; line-height: 1.85; }
+    .memory-gallery { gap: 8px; }
+    .memory-frame { padding: 4px 4px 8px; }
+    .memory-frame p { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="scene">
+
+    <button class="music-button" id="musicButton"
+            onclick="toggleMusic()">♫ Play music</button>
+
+    <audio id="birthdayMusic" loop preload="none">
+        <source src="birthdaysong.mp3.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="stickers"></div>
+
+    <!-- PAGE 1: GREETING -->
+    <section class="page active" id="page1">
+        <div class="card">
+            <p class="eyebrow">A little surprise for you</p>
+
+            <h2>Happy Birthday My<br>
+                <span class="pink">Kajukatali ♡</span>
+            </h2>
+
+            <p class="intro">
+                Today is all about you and the beautiful person you are.
+                I hope your day brings you gentle moments, genuine smiles,
+                and many reasons to feel happy.
+            </p>
+
+            <p class="intro">
+                May this new year of your life bring you peace,
+                laughter, love, and wonderful new memories.
+            </p>
+
+            <div class="button-row">
+                <button class="btn primary" onclick="showPage(2)">
+                    A little memory ♡
+                </button>
+                <button class="btn" onclick="showPage(3)">
+                    Make a wish 🎂
+                </button>
+                <button class="btn" onclick="showPage(4)">
+                    Read my letter 💌
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 2: MAIN PHOTO + EXTRA MEMORY PHOTOS -->
+    <section class="page" id="page2">
+        <div class="card">
+            <p class="eyebrow">A little memory</p>
+            <h2>Our Little <span class="pink">Memories ♡</span></h2>
+
+            <!-- Your original main photo -->
+            <div class="photo-frame">
+                <img src="herphoto2.png.jpeg"
+                     alt="A special birthday memory">
+            </div>
+
+            <p class="caption">
+                Some memories remain special, even as life moves forward. ♡
+            </p>
+
+            <p class="eyebrow" style="margin-top:30px">
+                Little moments, little memories
+            </p>
+
+            <!-- Add more photos by copying a memory-frame block -->
+            <div class="memory-gallery">
+
+                <div class="memory-frame">
+                    <img src="herphoto1.png.jpeg" alt="Memory 1">
+                    <p>♡ So Sweet</p>
+                </div>
+
+                <div class="memory-frame">
+                    <img src="herphoto.png.jpeg" alt="Memory 2">
+                    <p>Just AI With little smiles ✨</p>
+                </div>
+
+                <div class="memory-frame">
+                    <img src="herphoto3.png.jpeg" alt="Memory 3">
+                    <p>Cutiee ♡</p>
+                </div>
+
+                <!-- EXTRA PHOTOS: copy this block and change the filename
+                <div class="memory-frame">
+                    <img src="photos/photo7.jpg" alt="Memory 7">
+                    <p>Another memory ✨</p>
+                </div>
+                -->
+
+            </div>
+
+            <div class="button-row">
+                <button class="btn" onclick="showPage(1)">← Back</button>
+                <button class="btn primary" onclick="showPage(3)">
+                    Next: Make a wish 🎂
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3: CAKE -->
+    <section class="page" id="page3">
+        <div class="card">
+            <p class="eyebrow">A birthday wish for you</p>
+            <h2>Make a <span class="pink">wish! 🎂</span></h2>
+
+            <p class="intro">
+                Take a little moment for yourself and wish for something
+                beautiful. You deserve good things in life.
+            </p>
+
+            <div class="cake-area">
+                <div class="candles">
+                    <div class="candle">
+                        <span class="flame"></span>
+                        <span class="smoke">〰</span>
+                    </div>
+                    <div class="candle">
+                        <span class="flame"></span>
+                        <span class="smoke">〰</span>
+                    </div>
+                    <div class="candle">
+                        <span class="flame"></span>
+                        <span class="smoke">〰</span>
+                    </div>
+                </div>
+
+                <div class="cake"></div>
+                <div class="plate"></div>
+            </div>
+
+            <p id="wishMessage" class="intro">
+                Ready? Click below to blow out the candles!
+            </p>
+
+            <div class="button-row">
+                <button class="btn primary" id="blowButton"
+                        onclick="blowCandles()">
+                    Blow out candles ✨
+                </button>
+                <button class="btn" onclick="resetCandles()">
+                    Light them again 🕯️
+                </button>
+            </div>
+
+            <div class="button-row">
+                <button class="btn" onclick="showPage(2)">← Photos</button>
+                <button class="btn" onclick="showPage(4)">
+                    Read my letter 💌
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 4: YOUR ORIGINAL LETTER -->
+    <section class="page" id="page4">
+        <div class="card">
+            <p class="eyebrow">A few words from the heart</p>
+
+            <h2>A Birthday <span class="pink">Letter 💌</span></h2>
+
+            <div class="letter-text">Happy Birthday, Annu💗
+
+I don't know if these words will ever reach you the way I hope they will, but there is something I wanted you to know.
+
+I miss you, and sometimes little things remind me of you. They bring back memories that still mean something to me.
+
+Even though we don't talk like we used to, I genuinely wish happiness, peace, and beautiful things for you. Today, more than anything, I hope you feel appreciated and find plenty of reasons to smile.
+
+I made this little surprise because your birthday still matters to me. You don't have to say anything in return. I simply wanted to wish you a beautiful birthday and let you know that I sincerely wish the very best for you.
+
+May your days be filled with happiness, your heart with peace, and your future with beautiful possibilities.
+
+Happy Birthday, once again. Take care of yourself. ♡</div>
+
+            <p class="signature">With warm wishes, always. 🤍</p>
+
+            <div class="button-row">
+                <button class="btn" onclick="showPage(1)">
+                    ← Start again
+                </button>
+                <button class="btn primary" onclick="showPage(3)">
+                    One last wish 🎂
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <p class="footer">Made with care ♡</p>
+</div>
+
+<script>
+const audio = document.getElementById("birthdayMusic");
+const musicButton = document.getElementById("musicButton");
+
+let musicPlaying = false;
+let stickerInterval = null;
+let candlesBlown = false;
+
+function showPage(pageNumber) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById("page" + pageNumber).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function toggleMusic() {
+    if (musicPlaying) {
+        audio.pause();
+        musicPlaying = false;
+        musicButton.textContent = "♫ Play music";
+        return;
+    }
+
+    try {
+        await audio.play();
+        musicPlaying = true;
+        musicButton.textContent = "♫ Pause music";
+    } catch (error) {
+        musicButton.textContent = "♫ Play music";
+        alert(
+            "Check that birthday-song.mp3 is in the same folder as index.html."
+        );
+    }
+}
+
+audio.addEventListener("play", () => {
+    musicPlaying = true;
+    musicButton.textContent = "♫ Pause music";
+});
+
+audio.addEventListener("pause", () => {
+    musicPlaying = false;
+    musicButton.textContent = "♫ Play music";
+});
+
+function blowCandles() {
+    if (candlesBlown) return;
+
+    candlesBlown = true;
+
+    document.querySelectorAll(".flame").forEach(flame => {
+        flame.classList.add("off");
+    });
+
+    document.querySelectorAll(".smoke").forEach(smoke => {
+        smoke.classList.remove("show");
+        void smoke.offsetWidth;
+        smoke.classList.add("show");
+    });
+
+    document.getElementById("wishMessage").textContent =
+        "May your wish lead you toward beautiful things. Happy Birthday! 🤍";
+
+    document.getElementById("blowButton").textContent = "Wish made! ✨";
+
+    startStickers();
+}
+
+function resetCandles() {
+    candlesBlown = false;
+
+    document.querySelectorAll(".flame").forEach(flame => {
+        flame.classList.remove("off");
+    });
+
+    document.querySelectorAll(".smoke").forEach(smoke => {
+        smoke.classList.remove("show");
+    });
+
+    document.getElementById("wishMessage").textContent =
+        "Ready? Click below to blow out the candles!";
+
+    document.getElementById("blowButton").textContent =
+        "Blow out candles ✨";
+
+    stopStickers();
+}
+
+function startStickers() {
+    if (stickerInterval) return;
+
+    const container = document.getElementById("stickers");
+    const symbols = ["♡", "💕", "✨", "🌸", "💗", "🎉"];
+
+    stickerInterval = setInterval(() => {
+        const sticker = document.createElement("span");
+        sticker.className = "sticker";
+        sticker.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+        sticker.style.left = Math.random() * 100 + "vw";
+        sticker.style.fontSize = (18 + Math.random() * 20) + "px";
+        sticker.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+        container.appendChild(sticker);
+
+        setTimeout(() => sticker.remove(), 8500);
+    }, 350);
+}
+
+function stopStickers() {
+    if (stickerInterval) {
+        clearInterval(stickerInterval);
+        stickerInterval = null;
+    }
+
+    document.getElementById("stickers").innerHTML = "";
+}
+</script>
+</body>
+</html>
